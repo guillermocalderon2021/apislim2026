@@ -38,7 +38,12 @@ $container = $containerBuilder->build();
 AppFactory::setContainer($container);
 $app = AppFactory::create();
 
-$app->setBasePath('/apislim2026'); // Especifico el path base de la carpeta htdocs de xamp
+//$app->setBasePath('/apislim2026'); // Especifico el path base de la carpeta htdocs de xamp
+$scriptName = $_SERVER['SCRIPT_NAME'] ?? '';
+$basePath = str_replace('/index.php', '', $scriptName);
+if ($basePath !== '') {
+	$app->setBasePath($basePath);
+}
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__.'/../');
 $dotenv->load();
